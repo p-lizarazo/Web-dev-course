@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "forum-front"
+    }
+  },
+  "defaultProject": "forum-front",
+  "cli": {
+    "analytics": false
+  }
 }
