@@ -1,0 +1,57 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Peddana", serif;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.letter {
+  font-size: 90px;
+  color: #707070;
+  text-shadow: 2px 2px 5px #707070;
+}
+
+.login {
+  font-size: 50px;
+  color: #fa6980;
+  text-shadow: 2px 2px 3px #707070;
+}
+
+.txtArea {
+  margin-left: 10px;
+  box-shadow: 2px 2px 2px 1px black;
+  width: 200px;
+  height: 23px;
+  float: right;
+  margin-right: 500px;
+  margin-top: 17px;
+}
+
+button {
+  margin-left: 182px;
+  margin-top: 20px;
+  position: absolute;
+  background-color: #fa6980;
+  width: 80px;
+  height: 20px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #fa6980;
+  border-radius: 8px;
+}
+button:hover {
+  box-shadow: 2px 2px 2px #707070;
+}
+
+.imagePrincipal {
+  float: right;
+}
+
+.imagelogin {
+  margin-top: 10px;
+}
