@@ -7,6 +7,7 @@ import { ForumListComponent } from './forum/forum-list/forum-list.component';
 import { TopicListComponent } from './topic/topic-list/topic-list.component';
 import { TopicViewComponent } from './topic/topic-view/topic-view.component';
 import { TopicEditComponent } from './topic/topic-edit/topic-edit.component';
+import { LoginComponent } from './forum/login/login.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TopicEditComponent } from './topic/topic-edit/topic-edit.component';
     ForumListComponent,
     TopicListComponent,
     TopicViewComponent,
-    TopicEditComponent
+    TopicEditComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
