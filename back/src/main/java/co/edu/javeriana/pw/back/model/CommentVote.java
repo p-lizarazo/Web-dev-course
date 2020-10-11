@@ -1,26 +1,23 @@
 package co.edu.javeriana.pw.back.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Forum {
-       
+public class CommentVote {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String titulo;
-    private String descripcion;
-    private Boolean moderado;
+    @ManyToOne
+    private Comment comentario;
 
-    @OneToMany(mappedBy = "foro")
-    private List<Topic> temas;
+    private Boolean meGusta;
+    //private User owner;
 
-    // List<User> moderadores;
+    
 }
