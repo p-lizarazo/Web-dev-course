@@ -19,5 +19,29 @@ public class CommentVote {
     private Boolean meGusta;
     //private User owner;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Comment getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(Comment comentario) {
+        this.comentario = comentario;
+    }
+
+    public Boolean getMeGusta() {
+        return meGusta;
+    }
+
+    public void setMeGusta(Boolean meGusta) {
+        this.meGusta = meGusta;
+    }
+
     
 }

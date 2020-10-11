@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Comment {
     
@@ -28,12 +30,70 @@ public class Comment {
     private Topic tema;
 
     @OneToMany(mappedBy = "padre")
+    @JsonIgnore // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private List<Comment> respuestas;
 
     @ManyToOne
     private Comment padre;
 
     @OneToMany(mappedBy = "comentario")
+    @JsonIgnore // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private List<CommentVote> votos;
     //private User owner
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
+    }
+
+    public Date getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(Date fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public Topic getTema() {
+        return tema;
+    }
+
+    public void setTema(Topic tema) {
+        this.tema = tema;
+    }
+
+    public List<Comment> getRespuestas() {
+        return respuestas;
+    }
+
+    public void setRespuestas(List<Comment> respuestas) {
+        this.respuestas = respuestas;
+    }
+
+    public Comment getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Comment padre) {
+        this.padre = padre;
+    }
+
+    public List<CommentVote> getVotos() {
+        return votos;
+    }
+
+    public void setVotos(List<CommentVote> votos) {
+        this.votos = votos;
+    }
 }

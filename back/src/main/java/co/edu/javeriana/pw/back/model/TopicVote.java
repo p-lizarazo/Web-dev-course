@@ -18,5 +18,28 @@ public class TopicVote {
     @ManyToOne
     private Topic tema;
     //private User owner;
-    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getMeGusta() {
+        return meGusta;
+    }
+
+    public void setMeGusta(Boolean meGusta) {
+        this.meGusta = meGusta;
+    }
+
+    public Topic getTema() {
+        return tema;
+    }
+
+    public void setTema(Topic tema) {
+        this.tema = tema;
+    }
 }
