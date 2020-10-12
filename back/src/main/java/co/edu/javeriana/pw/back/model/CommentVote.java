@@ -1,5 +1,6 @@
 package co.edu.javeriana.pw.back.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,8 +17,11 @@ public class CommentVote {
     @ManyToOne
     private Comment comentario;
 
+    @Column(nullable = false)
     private Boolean meGusta;
-    //private User owner;
+    
+    @Column(nullable = false)
+    private String ownerUsername;
 
     public Long getId() {
         return id;

@@ -3,6 +3,7 @@ package co.edu.javeriana.pw.back.model;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Comment {
@@ -25,11 +29,15 @@ public class Comment {
 
     @Column(nullable = false)
     private Date fechaPublicacion;
+
+    @Column(nullable = false)
+    private String ownerUsername;
     
     @ManyToOne
     private Topic tema;
 
     @OneToMany(mappedBy = "padre")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private List<Comment> respuestas;
 
@@ -37,9 +45,10 @@ public class Comment {
     private Comment padre;
 
     @OneToMany(mappedBy = "comentario")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     private List<CommentVote> votos;
-    //private User owner
+    
 
     public Long getId() {
         return id;

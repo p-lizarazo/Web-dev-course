@@ -1,5 +1,6 @@
 package co.edu.javeriana.pw.back.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,11 @@ public class TopicVote {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Column(nullable = false)
     private Boolean meGusta;
+
+    @Column(nullable = false)
+    private String ownerUsername;
 
     @ManyToOne
     private Topic tema;
