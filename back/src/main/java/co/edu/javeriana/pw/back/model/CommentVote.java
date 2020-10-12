@@ -47,5 +47,13 @@ public class CommentVote {
         this.meGusta = meGusta;
     }
 
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
     
 }

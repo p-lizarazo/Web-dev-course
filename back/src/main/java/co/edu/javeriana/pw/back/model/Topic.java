@@ -3,7 +3,6 @@ package co.edu.javeriana.pw.back.model;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,6 +34,9 @@ public class Topic {
 
     @Column(nullable = false)
     private String ownerUsername;
+
+    @Column(nullable = false)
+    private Boolean aprobado;
 
     @ManyToOne
     private Forum foro;
@@ -105,6 +107,19 @@ public class Topic {
         this.votos = votos;
     }
 
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
 
-    
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
+    public Boolean getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(Boolean aprobado) {
+        this.aprobado = aprobado;
+    }  
 }

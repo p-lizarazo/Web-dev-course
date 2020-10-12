@@ -3,7 +3,6 @@ package co.edu.javeriana.pw.back.model;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +28,9 @@ public class Comment {
 
     @Column(nullable = false)
     private Date fechaPublicacion;
+
+    @Column(nullable = false)
+    private Boolean aprobado;
 
     @Column(nullable = false)
     private String ownerUsername;
@@ -105,4 +107,21 @@ public class Comment {
     public void setVotos(List<CommentVote> votos) {
         this.votos = votos;
     }
+
+    public Boolean getAprobado() {
+        return aprobado;
+    }
+
+    public void setAprobado(Boolean aprobado) {
+        this.aprobado = aprobado;
+    }
+
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+    
 }

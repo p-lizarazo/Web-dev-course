@@ -62,11 +62,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(entryPoint)
             .and()
             .authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/mod/**").hasRole("MOD")
+                .antMatchers("**").permitAll()
+                //.antMatchers("method")
+                /*
                 .antMatchers("/public/**", "/login/**").permitAll()
                 // Uncomment this to enable H2 console
                 .antMatchers("/h2/**").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
+                */
             .and()
             .formLogin()
                 .successHandler(successHandler)

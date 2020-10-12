@@ -22,7 +22,6 @@ public class TopicVote {
 
     @ManyToOne
     private Topic tema;
-    //private User owner;
 
     public Long getId() {
         return id;
@@ -47,4 +46,16 @@ public class TopicVote {
     public void setTema(Topic tema) {
         this.tema = tema;
     }
+
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
+    
+
+
 }

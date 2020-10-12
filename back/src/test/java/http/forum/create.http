@@ -1,7 +1,10 @@
-POST http://localhost:8080
+POST /forums/ HTTP/1.1
+Host: localhost:8080
+Cookie: JSESSIONID=D84CA48902743C1ED7BBA519F990C255; Path=/; HttpOnly;
 Content-Type: application/json
 
 {
-    //json
-    
+    "descripcion" : "Foro prueba insercion",
+    "moderado" : false,
+    "titulo" : "Un foro"
 }
