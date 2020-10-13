@@ -1,1 +1,120 @@
-<p>topic-view works!</p>
+<div class="h1 text-white text-center bg-primary p-4">
+  <div class="row">
+    <button (click)="backToList()" class="btn btn-light font-weight-bold h2">Atras</button>
+    <h2 class="col-11">Vista de tema de discución</h2>
+  </div>
+</div>
+<div class="container">
+  <div *ngIf="!(topic && topic.id)">
+    Cargando ...
+  </div>
+
+  <div *ngIf="topic && topic.id">
+    <a *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == topic.ownerUsername)"
+    [routerLink]="['../edit/', topic.id]" class="btn btn-warning mr-2">Edit</a>
+    <a *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == topic.ownerUsername)"
+    (click) = "delete(topic.id)"
+    [routerLink]="['../']" class="btn btn-danger">Delete</a>
+    <table class="table table-light">
+      <tbody>
+        <tr>
+          <td>ID</td>
+          <td>{{ topic.id }}</td>
+        </tr>
+        <tr>
+          <td>Titulo</td>
+          <td>{{ topic.titulo }}</td>
+        </tr>
+        <tr>
+          <td>Contenido</td>
+          <td>{{ topic.contenido }}</td>
+        </tr>
+        <tr>
+          <td>Fecha publicación</td>
+          <td>{{ topic.fechaPublicacion }}</td>
+        </tr>
+        <tr>
+          <td>Creador</td>
+          <td>{{ topic.ownerUsername }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="container my-2">
+      <button (click)="likeTopic()" class="btn btn-outline-success" [ngClass]="{'active' : this.myVote != undefined && this.myVote }">Like</button>
+      <button (click)="dislikeTopic()" class="btn btn-outline-danger ml-2" [ngClass]="{'active' : this.myVote != undefined && !this.myVote }">Dislike</button>
+      <p *ngIf="topic.likes != undefined"> <span>Likes: </span> {{this.topic.likes}}</p>
+      <p *ngIf="topic.dislikes != undefined"> <span>Dislikes: </span> {{this.topic.dislikes}}</p>
+      <p *ngIf="topic.ranking != undefined"> <span>Ranking: </span> {{this.topic.ranking}}</p>
+    </div>
+  </div>
+
+  <div *ngIf="topic && topic.id" class="bg-light">
+    <div>
+      <h3>Comentarios</h3>
+    </div>
+    <ul>
+      <ng-container *ngFor="let com of comments">
+        <li *ngIf="!com.padre" >
+            <div class="container bg-white card px-4 py-2 w-50 d-inline-flex">
+              <div class="row">
+                <p class="m-0"><span class="text-info">Usuario: </span> {{com.ownerUsername}}</p>
+              </div>
+              <div class="row">
+                <p class="m-0"><span class="text-info">Contenido: </span> {{com.contenido}}</p>
+              </div>
+              <div class="row">
+                <p class="m-0"><span class="text-info">Fecha Pub: </span> {{com.fechaPublicacion}}</p>
+              </div>
+              <div class="row">
+                <p class="col-4" *ngIf="com.likes != undefined"> <span>Likes: </span> {{com.likes}}</p>
+                <p class="col-4" *ngIf="com.dislikes != undefined"> <span>Dislikes: </span> {{com.dislikes}}</p>
+                <p class="col-4" *ngIf="com.ranking != undefined"> <span>Ranking: </span> {{com.ranking}}</p>
+              </div>
+
+              <div class="row my-2">
+                <button (click)="likeComment(com)" class="btn btn-outline-success" [ngClass]="{'active' : com.myLike != undefined && com.myLike }">Like</button>
+                <button (click)="dislikeComment(com)" class="btn btn-outline-danger ml-2" [ngClass]="{'active' : com.myLike != undefined && !com.myLike }">Dislike</button>
+              </div>
+              <div class="row">
+                <input type="text" name="" id="">
+                <button class="btn btn-info ml-2">Reply</button>
+              </div>
+            </div>
+            <ul>
+              <ng-container *ngFor="let comRes of comments">
+                <li *ngIf="comRes.padre && comRes.padre.id == com.id">
+                  <div class="container my-2 bg-white card px-4  py-2 w-50 d-inline-flex">
+                    <div class="row">
+                      <p class="m-0"><span class="text-info">Usuario: </span> {{comRes.ownerUsername}}</p>
+                    </div>
+                    <div class="row">
+                      <p class="m-0"><span class="text-info">Contenido: </span> {{comRes.contenido}}</p>
+                    </div>
+                    <div class="row">
+                      <p class="m-0"><span class="text-info">Fecha Pub: </span> {{comRes.fechaPublicacion}}</p>
+                    </div>
+                    <div class="row">
+                      <p class="col-4" *ngIf="comRes.likes != undefined"> <span>Likes: </span> {{comRes.likes}}</p>
+                      <p class="col-4" *ngIf="comRes.dislikes != undefined"> <span>Dislikes: </span> {{comRes.dislikes}}</p>
+                      <p class="col-4" *ngIf="comRes.ranking != undefined"> <span>Ranking: </span> {{comRes.ranking}}</p>
+                    </div>
+                    <div class="row my-2">
+                      <button (click)="likeComment(comRes)" class="btn btn-outline-success" [ngClass]="{'active' : comRes.myLike != undefined && comRes.myLike }">Like</button>
+                      <button (click)="dislikeComment(comRes)" class="btn btn-outline-danger ml-2" [ngClass]="{'active' : comRes.myLike != undefined && !comRes.myLike }">Dislike</button>
+
+                    </div>
+                  </div>
+                </li>
+
+              </ng-container>
+            </ul>
+        </li>
+
+      </ng-container>
+    </ul>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+</div>

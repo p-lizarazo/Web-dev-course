@@ -1,1 +1,32 @@
-<p>topic-list works!</p>
+<div class="h1 text-white text-center bg-primary p-4">
+  <div class="row">
+    <a class="btn btn-light font-weight-bold h2" [routerLink]="['../../']" >Atras </a>
+    <h2 class="col-11">Temas de Discusion</h2>
+  </div>
+</div>
+
+<div>
+  <a *ngIf="this.userGlobal.user" [routerLink]="['create/']" class="btn btn-primary m-2">Create</a>
+  <table class="table table-light">
+    <thead class="thead-light">
+      <tr>
+        <th>Id</th>
+        <th>Titulo</th>
+        <th>Fecha Publicacion</th>
+        <th>Creador</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let topic of topics">
+        <td>
+          <a [routerLink]="[topic.id]">{{
+            topic.id
+          }}</a>
+        </td>
+        <td>{{ topic.titulo }}</td>
+        <td>{{ topic.fechaPublicacion }}</td>
+        <td>{{ topic.ownerUsername }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

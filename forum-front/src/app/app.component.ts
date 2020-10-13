@@ -8,7 +8,7 @@ import { UserGlobalService } from './services/user-global.service';
 })
 export class AppComponent implements OnInit {
   title = 'forum-front';
-  constructor(private userService: UserGlobalService) {}
+  constructor(public userService: UserGlobalService) {}
 
   ngOnInit(): void{
     if (!this.userService.user ){

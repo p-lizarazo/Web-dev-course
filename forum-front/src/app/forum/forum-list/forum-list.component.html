@@ -3,7 +3,7 @@
 </div>
 
 <div>
-  <a class="btn btn-primary m-2" [routerLink]="['/forum/create']">Create</a>
+  <a *ngIf="this.userGlobal.user && this.userGlobal.user.containsRole('ROLE_ADMIN')" class="btn btn-primary m-2" [routerLink]="['/forum/create']">Create</a>
   <table class="table table-light">
     <thead class="thead-light">
       <tr>
@@ -11,12 +11,14 @@
         <th>Titulo</th>
         <th>Descripcion</th>
         <th>Moderado</th>
+        <th *ngIf="this.userGlobal.user && this.userGlobal.user.containsRole('ROLE_ADMIN')">Editar</th>
+        <th *ngIf="this.userGlobal.user && this.userGlobal.user.containsRole('ROLE_ADMIN')">Eliminar</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let forum of forums">
         <td>
-          <a [routerLink]="['/forum/view', forum.id]">{{
+          <a [routerLink]="['/forum/', forum.id, 'topics']">{{
             forum.id
           }}</a>
         </td>
@@ -24,6 +26,18 @@
         <td>{{ forum.descripcion }}</td>
         <td *ngIf="forum.moderado">Si</td>
         <td *ngIf="!forum.moderado">No</td>
+        <td *ngIf="this.userGlobal.user && this.userGlobal.user.containsRole('ROLE_ADMIN')">
+          <a *ngIf="this.userGlobal.user && this.userGlobal.user.containsRole('ROLE_ADMIN')" [routerLink]="['/forum/edit/', forum.id]"
+            class="btn btn-warning">
+              Editar
+          </a>
+        </td>
+        <td *ngIf="this.userGlobal.user && this.userGlobal.user.containsRole('ROLE_ADMIN')">
+          <button *ngIf="this.userGlobal.user && this.userGlobal.user.containsRole('ROLE_ADMIN')"
+            class="btn btn-danger" (click)="delete(forum.id)">
+              Eliminar
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

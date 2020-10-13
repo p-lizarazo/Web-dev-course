@@ -1,13 +1,9 @@
 <div>
-  <h2 class="h1 text-white text-center bg-primary p-4">Editar Tema de discusión</h2>
+  <h2 class="h1 text-white text-center bg-primary p-4">Crear Tema De Discusion</h2>
 </div>
 
-<div *ngIf="!(topic && topic.id)">
-  Cargando ...
-</div>
-
-<div class="container" *ngIf="topic && topic.id">
-  <form (ngSubmit)="update()" #updateForm="ngForm">
+<div class="container">
+  <form (ngSubmit)="create()" #createForm="ngForm">
     <div class="form-group">
       <label for="name">Titulo</label>
       <input
@@ -29,16 +25,17 @@
 
     <div class="form-group">
       <label for="contenido">Contenido</label>
-      <input
+      <textarea
         id="contenido"
         class="form-control"
         type="text"
         name="contenido"
         [(ngModel)]="topic.contenido"
-      />
+        row="2"
+      ></textarea>
     </div>
 
-    <button type="submit" class="btn btn-success" [disabled]="!updateForm.valid || updateForm.submitted">
+    <button type="submit" class="btn btn-success" [disabled]="!canSubmit">
       Save
     </button>
     <button (click)="cancel()" class="btn btn-danger">Cancel</button>

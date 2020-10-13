@@ -23,8 +23,9 @@ export class ForumsServiceService {
       .get<T>(url, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        })
+          Accept : 'application/json'
+        }),
+        withCredentials: true
       })
       .pipe(
         // retry(5),
@@ -38,7 +39,8 @@ export class ForumsServiceService {
       .post<T>(url, data, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
-        })
+        }),
+        withCredentials: true
       })
       .pipe(
         // retry(5),
@@ -48,7 +50,9 @@ export class ForumsServiceService {
 
   private put<T>(url, data: T): Observable<T> {
     console.log('put:', url);
-    return this.http.put<T>(url, data).pipe(
+    return this.http.put<T>(url, data, {
+      withCredentials: true
+    }).pipe(
       // retry(5),
       catchError(this.handleError)
     );
@@ -56,7 +60,9 @@ export class ForumsServiceService {
 
   private delete<T>(url): Observable<T> {
     console.log('delete: ', url);
-    return this.http.delete<T>(url).pipe(
+    return this.http.delete<T>(url, {
+      withCredentials: true
+    }).pipe(
       catchError(this.handleError)
     );
   }
@@ -65,6 +71,36 @@ export class ForumsServiceService {
   {
     const url = `${environment.RESTServiceBaseUrl}/forums`;
     return this.get<Forum[]>(url);
+  }
+
+  create(forum: Forum): Observable<any>{
+    const url = `${environment.RESTServiceBaseUrl}/forums`;
+    return this.post(url, {
+      descripcion: forum.descripcion,
+      moderado: forum.moderado,
+      titulo: forum.titulo
+    });
+  }
+
+  update(forum: Forum): Observable<any> {
+    const url = `${environment.RESTServiceBaseUrl}/forums/${forum.id}`;
+    return this.put(url, {
+      descripcion: forum.descripcion,
+      moderado: forum.moderado,
+      titulo: forum.titulo
+    });
+  }
+
+  findById(
+    id: number // : Observable<Forum>
+  ): Observable<Forum> {
+    const url = `${environment.RESTServiceBaseUrl}/forums/${id}`;
+    return this.get<Forum>(url);
+  }
+
+  deleteForum(id: number): Observable<any>{
+    const url = `${environment.RESTServiceBaseUrl}/forums/${id}`;
+    return this.delete(url);
   }
 
 

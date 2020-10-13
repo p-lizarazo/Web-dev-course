@@ -11,6 +11,9 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserGlobalService } from './services/user-global.service';
+import { ForumEditComponent } from './forum/forum-edit/forum-edit.component';
+import { ForumCreateComponent } from './forum/forum-create/forum-create.component';
+import { TopicCreateComponent } from './topic/topic-create/topic-create.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { UserGlobalService } from './services/user-global.service';
     TopicListComponent,
     TopicViewComponent,
     TopicEditComponent,
-    LoginComponent
+    LoginComponent,
+    ForumEditComponent,
+    ForumCreateComponent,
+    TopicCreateComponent
   ],
   imports: [
     BrowserModule,

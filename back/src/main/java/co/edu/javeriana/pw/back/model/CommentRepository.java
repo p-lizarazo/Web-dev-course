@@ -6,4 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface CommentRepository extends CrudRepository<Comment,Long> {
     List<Comment> findByAprobado(Boolean bool);
+
+    List<Comment> findByTema(Topic tema);
 }

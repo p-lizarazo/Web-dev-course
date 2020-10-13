@@ -12,8 +12,11 @@
           <li class="pl-4" >
             <a class="text-white" [routerLink]="['/forum']">Foros</a>
           </li>
-          <li class="pl-4">
+          <li class="pl-4" *ngIf="!(this.userService.user && this.userService.user.name)">
             <a class="text-white" [routerLink]="['/login']">Log in</a>
+          </li>
+          <li class="pl-4" *ngIf="this.userService.user && this.userService.user.name">
+            <a class="text-white" [routerLink]="['/login']">{{this.userService.user.name}}</a>
           </li>
         </ul>
       </nav>

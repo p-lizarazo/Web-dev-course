@@ -1,0 +1,74 @@
+<div>
+  <h2 class="h1 text-white text-center bg-primary p-4">Crear Foro</h2>
+</div>
+
+<div class="container">
+  <form (ngSubmit)="create()" #createForm="ngForm">
+    <div class="form-group">
+      <label for="name">Titulo</label>
+      <input
+        id="titulo"
+        class="form-control"
+        type="text"
+        name="titulo"
+        required
+        [(ngModel)]="forum.titulo"
+        #txtName="ngModel"
+      />
+      <div
+        [hidden]="txtName.valid || !txtName.touched"
+        class="alert alert-danger"
+      >
+        Titulo obligatorio
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripcion</label>
+      <input
+        id="descripcion"
+        class="form-control"
+        type="text"
+        name="descripcion"
+        [(ngModel)]="forum.descripcion"
+      />
+    </div>
+
+    <div class="form-group">
+      <div>
+        <input
+          id="si"
+          type="radio"
+          value="true"
+          class="mr-2"
+          name="moderado"
+          [(ngModel)]="forum.moderado"
+        />
+
+        <label for="si">Moderado </label>
+
+      </div>
+      <div>
+        <input
+        id="no"
+        type="radio"
+        value="false"
+        class="mr-2"
+        name="moderado"
+        [(ngModel)]="forum.moderado"
+        />
+        <label for="no">No Moderado </label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!canSubmit">
+      Save
+    </button>
+    <button (click)="cancel()" class="btn btn-danger">Cancel</button>
+  </form>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+</div>
+

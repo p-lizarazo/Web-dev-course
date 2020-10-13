@@ -1,5 +1,8 @@
 package co.edu.javeriana.pw.back.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -31,13 +34,19 @@ public class ForumService {
     @GetMapping("/forums/{id}")
     public Forum findById(@PathVariable Long id)
     {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Employee not found"));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Forum not found"));
     }
 
     @GetMapping("/forums/{id}/topics")
     public Iterable<Topic> findAllTopics(@PathVariable("id") Long forumId)
     {
-        return repository.findById(forumId).get().getTemas();
+        List<Topic> temp = repository.findById(forumId).get().getTemas();
+        List<Topic> resp = new ArrayList<>();
+        for (Topic topic : temp) {
+            if(topic.getAprobado())
+                resp.add(topic);
+        }
+        return resp;
     }
 
     @PostMapping("/forums")

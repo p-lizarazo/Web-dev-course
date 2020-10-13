@@ -45,11 +45,25 @@ public class CommentVoteService {
     {
         return repository.findCommentLikes(id);
     }
+
+    @GetMapping("comments/{id}/ranking")
+    public Long findCommentsRanking(@PathVariable Long id)
+    {
+        return (repository.findCommentLikes(id) - repository.findCommentDislikes(id));
+    }
     
     @GetMapping("comments/{id}/dislikes")
     public Long findCommentsDislikes(@PathVariable Long id)
     {
         return repository.findCommentDislikes(id);
+    }
+
+    @GetMapping("comments/{id}/myvote")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD','ROLE_USER')")
+    public boolean findMyVoteInTopic(@PathVariable Long id, Authentication auth)
+    {
+        Comment comment = commentRepository.findById(id).get();
+        return repository.findByOwnerUsernameAndComentario(auth.getName(), comment).get().getMeGusta();
     }
 
     @PostMapping("comments/{id}/likes")
@@ -59,9 +73,13 @@ public class CommentVoteService {
         Comment mComment = commentRepository.findById(id).get();
         try {
             CommentVote cv = repository.findByOwnerUsernameAndComentario(auth.getName(), mComment).get();
-            if(!cv.getMeGusta())
+            if(!cv.getMeGusta()){
                 cv.setMeGusta(true);
-            return repository.save(cv);
+                return repository.save(cv);
+            } else {
+                repository.delete(cv);
+                return new CommentVote();
+            }
         } catch(NoSuchElementException ex) {
             CommentVote newVote = new CommentVote();
             newVote.setMeGusta(true);
@@ -78,9 +96,13 @@ public class CommentVoteService {
         Comment mComment = commentRepository.findById(id).get();
         try {
             CommentVote cv = repository.findByOwnerUsernameAndComentario(auth.getName(), mComment).get();
-            if(cv.getMeGusta())
+            if(cv.getMeGusta()){
                 cv.setMeGusta(false);
-            return repository.save(cv);
+                return repository.save(cv);
+            } else {
+                repository.delete(cv);
+                return new CommentVote();
+            }
         } catch(NoSuchElementException ex) {
             CommentVote newVote = new CommentVote();
             newVote.setMeGusta(false);

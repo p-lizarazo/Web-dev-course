@@ -40,6 +40,14 @@ public class TopicVoteService {
         return repository.findByTema(topic);
     }
 
+    @GetMapping("topics/{id}/myvote")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD','ROLE_USER')")
+    public boolean findMyVoteInTopic(@PathVariable Long id, Authentication auth)
+    {
+        Topic topic = topicRepository.findById(id).get();
+        return repository.findByOwnerUsernameAndTema(auth.getName(), topic).get().getMeGusta();
+    }
+
     @GetMapping("topics/{id}/likes")
     public Long findTopicsLikes(@PathVariable Long id)
     {
@@ -59,9 +67,13 @@ public class TopicVoteService {
         Topic mTopic = topicRepository.findById(id).get();
         try {
             TopicVote tv = repository.findByOwnerUsernameAndTema(auth.getName(), mTopic).get();
-            if(!tv.getMeGusta())
+            if(!tv.getMeGusta()){
                 tv.setMeGusta(true);
-            return repository.save(tv);
+                return repository.save(tv);
+            } else {
+                repository.delete(tv);
+                return new TopicVote();
+            }
         } catch(NoSuchElementException ex) {
             TopicVote newVote = new TopicVote();
             newVote.setMeGusta(true);
@@ -78,12 +90,17 @@ public class TopicVoteService {
         Topic mTopic = topicRepository.findById(id).get();
         try {
             TopicVote tv = repository.findByOwnerUsernameAndTema(auth.getName(), mTopic).get();
-            if(tv.getMeGusta())
+            if(tv.getMeGusta()){
                 tv.setMeGusta(false);
-            return repository.save(tv);
+                return repository.save(tv);
+            }
+            else {
+                repository.delete(tv);
+                return new TopicVote();
+            }
         } catch(NoSuchElementException ex) {
             TopicVote newVote = new TopicVote();
-            newVote.setMeGusta(true);
+            newVote.setMeGusta(false);
             newVote.setOwnerUsername(auth.getName());
             newVote.setTema(mTopic);
             return repository.save(newVote);
@@ -97,6 +114,12 @@ public class TopicVoteService {
         Topic mTopic = topicRepository.findById(id).get();
         TopicVote mVote = repository.findByOwnerUsernameAndTema(auth.getName(), mTopic).get();
         repository.delete(mVote);
+    }
+
+    @GetMapping("topics/{id}/ranking")
+    public Long findTopicRanking(@PathVariable Long id)
+    {
+        return (repository.findTopicsLikes(id) - repository.findTopicsDislikes(id));
     }
     
 }

@@ -2,6 +2,8 @@ package co.edu.javeriana.pw.back.service;
 
 import java.security.Principal;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import co.edu.javeriana.pw.back.exceptions.NotFoundException;
 import co.edu.javeriana.pw.back.model.Comment;
 import co.edu.javeriana.pw.back.model.CommentRepository;
+import co.edu.javeriana.pw.back.model.Topic;
 import co.edu.javeriana.pw.back.model.TopicRepository;
 
 @RestController
@@ -66,6 +69,19 @@ public class CommentService {
             return com;
         else
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "unauthorized");
+    }
+
+    @GetMapping("/topics/{id}/comments")
+    public List<Comment> findTopicComments(@PathVariable Long id)
+    {
+        Topic t = topicRepository.findById(id).get();
+        List<Comment> temp = repository.findByTema(t);
+        List<Comment> resp = new ArrayList<>();
+        for (Comment comment : temp) {
+            if(comment.getAprobado())
+                resp.add(comment);
+        }
+        return resp;
     }
 
     @PostMapping("/comments")

@@ -9,7 +9,7 @@ import { User } from '../models/user';
   providedIn: 'root'
 })
 export class UserGlobalService {
-  user: any = null;
+  user: User = null;
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse): Observable<any> {
