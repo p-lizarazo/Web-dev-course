@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Topic } from 'src/app/models/topic';
 import { TopicsServiceService } from 'src/app/services/topics-service.service';
@@ -28,6 +29,18 @@ export class TopicListComponent implements OnInit {
       )
       .subscribe(result => {
         this.topics = result;
+        this.topics.forEach(el => {
+          this.topicService.findTopicRanking(el).subscribe(
+            mresult => {
+              el.ranking = mresult;
+              this.topics.sort(
+                (a: Topic, b: Topic) => {
+                  return b.ranking - a.ranking;
+                }
+              );
+            }
+          );
+        });
       });
   }
 

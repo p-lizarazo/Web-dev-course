@@ -97,6 +97,20 @@ export class TopicViewComponent implements OnInit {
     );
   }
 
+  deleteComment(comment: Comment): void
+  {
+    this.topicService.deleteComment(comment).subscribe(
+      results => {
+        this.topicService.findTopicComments(this.topic).subscribe(
+          (cResult: any) => {
+            console.log(cResult);
+            this.comments = cResult;
+            this.updateLikesComments();
+        });
+      },
+      error => console.error(error)
+    );
+  }
 
   updateLikes(): void {
     this.topicService.findTopicLikes(this.topic).subscribe(
@@ -141,6 +155,11 @@ export class TopicViewComponent implements OnInit {
       this.topicService.findCommentRanking(element).subscribe(
         result => {
           element.ranking = result;
+          this.comments.sort(
+            (a: Comment, b: Comment) => {
+              return b.ranking - a.ranking;
+            }
+          );
         }
       );
       this.topicService.findMyCommentVote(element).subscribe(
@@ -150,8 +169,72 @@ export class TopicViewComponent implements OnInit {
           element.myLike = null;
         }
       );
-
     });
+  }
+
+  createComment(contenido: string): void
+  {
+    const myComment = new Comment(
+      undefined,
+      contenido,
+      undefined,
+      undefined,
+      undefined,
+      this.topic,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined
+    );
+    this.topicService.createComment(myComment).subscribe(
+      response => {
+        this.topicService.findTopicComments(this.topic).subscribe(
+          (cResult: any) => {
+            console.log(cResult);
+            this.comments = cResult;
+            this.updateLikesComments();
+        });
+      }
+    );
+  }
+
+  editarComment(comment: Comment): void
+  {
+    this.topicService.editarComment(comment).subscribe(
+      result => {
+        console.log('Edited OK');
+      }
+    );
+  }
+
+  createCommentReply(padre: Comment, contenido: string): void
+  {
+    const myComment = new Comment(
+      undefined,
+      contenido,
+      undefined,
+      undefined,
+      undefined,
+      this.topic,
+      undefined,
+      padre,
+      undefined,
+      undefined,
+      undefined,
+      undefined
+    );
+    this.topicService.createReplyComment(myComment).subscribe(
+      response => {
+        this.topicService.findTopicComments(this.topic).subscribe(
+          (cResult: any) => {
+            console.log(cResult);
+            this.comments = cResult;
+            this.updateLikesComments();
+        });
+      }
+    );
   }
 
 

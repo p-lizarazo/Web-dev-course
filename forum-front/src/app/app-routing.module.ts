@@ -8,12 +8,14 @@ import { ForumCreateComponent } from './forum/forum-create/forum-create.componen
 import { TopicCreateComponent } from './topic/topic-create/topic-create.component';
 import { TopicViewComponent } from './topic/topic-view/topic-view.component';
 import { TopicEditComponent } from './topic/topic-edit/topic-edit.component';
+import { ModComponent } from './mod/mod/mod.component';
 
 const routes: Routes = [
 
   { path: '', pathMatch: 'full', redirectTo: 'login'},
   { path: 'login', component: LoginComponent},
   { path: 'forum', component: ForumListComponent},
+  { path: 'mod', component: ModComponent},
   { path: 'forum/:id/topics', component: TopicListComponent},
   { path: 'forum/:id/topics/create', component: TopicCreateComponent},
   { path: 'forum/:id/topics/:idTopic', component: TopicViewComponent},
@@ -21,6 +23,7 @@ const routes: Routes = [
   { path: 'forum/edit/:id', component: ForumEditComponent},
   { path: 'forum/create', component: ForumCreateComponent},
   { path: ':forumId', component: TopicListComponent },
+
 ];
 
 @NgModule({

@@ -54,6 +54,23 @@ public class CommentService {
         return repository.findByAprobado(false);
     }
 
+    @PostMapping("/comments/{id}/aprobar")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD')")
+    public Comment aprobarComentario(@PathVariable Long id)
+    {
+        Comment c = repository.findById(id).get();
+        c.setAprobado(true);
+        return repository.save(c);
+    }
+
+    @PostMapping("/comments/{id}/rechazar")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD')")
+    public void rechazarComentario(@PathVariable Long id)
+    {
+        Comment c = repository.findById(id).get();
+        repository.delete(c);
+    }
+
     @GetMapping("/comments/{id}/any")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD')")
     public Comment findCommentMod(@PathVariable Long id)

@@ -53,14 +53,34 @@
       <h3>Comentarios</h3>
     </div>
     <ul>
+      <div class="container">
+        <input #inputComentario type="text" name="inputComentario" id="inputComentario">
+        <button (click)="createComment(inputComentario.value)" class="btn btn-info ml-2">Comentar</button>
+      </div>
       <ng-container *ngFor="let com of comments">
         <li *ngIf="!com.padre" >
             <div class="container bg-white card px-4 py-2 w-50 d-inline-flex">
+              <div *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == com.ownerUsername)"
+              class="row">
+                <button
+                (click)="editarComment(com)" class="btn btn-warning ml-2" >Editar</button>
+                <button
+                (click)="deleteComment(com)" class="btn btn-danger ml-2" >Eliminar</button>
+              </div>
+
               <div class="row">
                 <p class="m-0"><span class="text-info">Usuario: </span> {{com.ownerUsername}}</p>
               </div>
-              <div class="row">
+              <div *ngIf="!(this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == com.ownerUsername))"
+              class="row">
                 <p class="m-0"><span class="text-info">Contenido: </span> {{com.contenido}}</p>
+              </div>
+              <div class="row"
+              *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == com.ownerUsername)"
+
+              >
+                <span class="text-info mr-2">Contenido: </span>
+                <input class="w-100" type="text" [(ngModel)]="com.contenido">
               </div>
               <div class="row">
                 <p class="m-0"><span class="text-info">Fecha Pub: </span> {{com.fechaPublicacion}}</p>
@@ -74,22 +94,41 @@
               <div class="row my-2">
                 <button (click)="likeComment(com)" class="btn btn-outline-success" [ngClass]="{'active' : com.myLike != undefined && com.myLike }">Like</button>
                 <button (click)="dislikeComment(com)" class="btn btn-outline-danger ml-2" [ngClass]="{'active' : com.myLike != undefined && !com.myLike }">Dislike</button>
+
               </div>
               <div class="row">
-                <input type="text" name="" id="">
-                <button class="btn btn-info ml-2">Reply</button>
+                <input #inputResponder type="text" name="{{'com'+com.id}}" id="{{'com'+com.id}}">
+                <button (click)="createCommentReply(com,inputResponder.value)" class="btn btn-info ml-2">Responder</button>
               </div>
             </div>
             <ul>
               <ng-container *ngFor="let comRes of comments">
                 <li *ngIf="comRes.padre && comRes.padre.id == com.id">
                   <div class="container my-2 bg-white card px-4  py-2 w-50 d-inline-flex">
+                    <div *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == comRes.ownerUsername)"
+                    class="row">
+                      <button
+                      (click)="editarComment(comRes)" class="btn btn-warning ml-2" >Editar</button>
+                      <button
+                      (click)="deleteComment(comRes)" class="btn btn-danger ml-2" >Eliminar</button>
+                    </div>
+
                     <div class="row">
                       <p class="m-0"><span class="text-info">Usuario: </span> {{comRes.ownerUsername}}</p>
                     </div>
-                    <div class="row">
+
+                    <div *ngIf="!(this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == comRes.ownerUsername))"
+                    class="row">
                       <p class="m-0"><span class="text-info">Contenido: </span> {{comRes.contenido}}</p>
                     </div>
+                    <div class="row"
+                    *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.name == comRes.ownerUsername)"
+
+                    >
+                      <span class="text-info mr-2">Contenido: </span>
+                      <input class="w-100" type="text" [(ngModel)]="comRes.contenido">
+                    </div>
+
                     <div class="row">
                       <p class="m-0"><span class="text-info">Fecha Pub: </span> {{comRes.fechaPublicacion}}</p>
                     </div>

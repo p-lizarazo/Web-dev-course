@@ -9,15 +9,19 @@
       <h1 class="text-white h1">MyForum</h1>
       <nav class="text-white">
         <ul class="row">
+          <li class="pl-4" *ngIf="this.userService.user && (this.userService.user.containsRole('ROLE_ADMIN') || this.userService.user.containsRole('ROLE_MOD'))">
+            <a class="h4 text-primary" [routerLink]="['/mod']">Moderar</a>
+          </li>
           <li class="pl-4" >
-            <a class="text-white" [routerLink]="['/forum']">Foros</a>
+            <a class="h4 text-white" [routerLink]="['/forum']">Foros</a>
           </li>
           <li class="pl-4" *ngIf="!(this.userService.user && this.userService.user.name)">
-            <a class="text-white" [routerLink]="['/login']">Log in</a>
+            <a class="h4 text-white" [routerLink]="['/login']">Log in</a>
           </li>
           <li class="pl-4" *ngIf="this.userService.user && this.userService.user.name">
-            <a class="text-white" [routerLink]="['/login']">{{this.userService.user.name}}</a>
+            <a class="h4 text-white" [routerLink]="['/login']">{{this.userService.user.name}}</a>
           </li>
+
         </ul>
       </nav>
     </div>

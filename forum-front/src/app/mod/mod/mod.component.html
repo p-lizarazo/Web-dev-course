@@ -1,0 +1,76 @@
+<div>
+  <h2 class="h1 text-white text-center bg-primary p-4">Temas de discusion Por Aprobar</h2>
+</div>
+
+<div *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.containsRole('ROLE_MOD'))" >
+  <table class="table table-light">
+    <thead class="thead-light">
+      <tr>
+        <th>Id</th>
+        <th>Fecha Publicacion</th>
+        <th>Titulo</th>
+        <th>Contenido</th>
+        <th>Dueño</th>
+        <th>Aprobar</th>
+        <th>Rechazar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let topic of topics">
+        <td>{{ topic.id }}</td>
+        <td>{{ topic.fechaPublicacion }}</td>
+        <td>{{ topic.titulo }}</td>
+        <td>{{ topic.contenido }}</td>
+        <td>{{ topic.ownerUsername }}</td>
+        <td>
+          <button class="btn btn-success" (click)="approveTopic(topic)">
+              Aprobar
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger"  (click)="denyTopic(topic)">
+            Rechazar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div>
+  <h2 class="h1 text-white text-center bg-primary p-4">Comentarios por aprobar</h2>
+</div>
+
+<div *ngIf="this.userGlobal.user && (this.userGlobal.user.containsRole('ROLE_ADMIN') || this.userGlobal.user.containsRole('ROLE_MOD'))" >
+  <table class="table table-light">
+    <thead class="thead-light">
+      <tr>
+        <th>Id</th>
+        <th>Fecha Publicacion</th>
+        <th>Contenido</th>
+        <th>Dueño</th>
+        <th>Aprobar</th>
+        <th>Rechazar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let comment of comments">
+        <td>{{ comment.id }}</td>
+        <td>{{ comment.fechaPublicacion }}</td>
+        <td>{{ comment.contenido }}</td>
+        <td>{{ comment.ownerUsername }}</td>
+        <td>
+          <button class="btn btn-success" (click)="approveComment(comment)">
+              Aprobar
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger"  (click)="denyComment(comment)">
+            Rechazar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

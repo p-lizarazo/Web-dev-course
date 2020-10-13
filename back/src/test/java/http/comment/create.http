@@ -6,5 +6,8 @@ Content-Type: application/json
     "contenido" : "en este tema les explicare a jugar",
     "tema" : {
         "id" : -1 
+    },
+    "padre" : {
+        "id" : -1
     }
 }

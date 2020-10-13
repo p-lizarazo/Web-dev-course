@@ -14,6 +14,7 @@ import { UserGlobalService } from './services/user-global.service';
 import { ForumEditComponent } from './forum/forum-edit/forum-edit.component';
 import { ForumCreateComponent } from './forum/forum-create/forum-create.component';
 import { TopicCreateComponent } from './topic/topic-create/topic-create.component';
+import { ModComponent } from './mod/mod/mod.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TopicCreateComponent } from './topic/topic-create/topic-create.componen
     LoginComponent,
     ForumEditComponent,
     ForumCreateComponent,
-    TopicCreateComponent
+    TopicCreateComponent,
+    ModComponent
   ],
   imports: [
     BrowserModule,

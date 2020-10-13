@@ -51,6 +51,23 @@ public class TopicService {
         return repository.findByAprobado(false);
     }
 
+    @PostMapping("/topics/{id}/aprobar")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD')")
+    public Topic aprobarTopic(@PathVariable Long id)
+    {
+        Topic t = repository.findById(id).get();
+        t.setAprobado(true);
+        return repository.save(t);
+    }
+
+    @PostMapping("/topics/{id}/rechazar")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD')")
+    public void rechazarTopic(@PathVariable Long id)
+    {
+        Topic t = repository.findById(id).get();
+        repository.delete(t);
+    }
+
     @GetMapping("/topics/{id}/any")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MOD')")
     public Topic findTopicMod(@PathVariable Long id)

@@ -102,12 +102,24 @@ export class TopicsServiceService {
     return this.delete(url);
   }
 
+  deleteComment(comment: Comment): Observable<any>{
+    const url = `${environment.RESTServiceBaseUrl}/comments/${comment.id}`;
+    return this.delete(url);
+  }
+
   update(topic: Topic): Observable<any> {
     const url = `${environment.RESTServiceBaseUrl}/topics/${topic.id}`;
     return this.put(url, {
       titulo: topic.titulo,
       contenido: topic.contenido,
       foro: topic.foro
+    });
+  }
+
+  editarComment(comment: Comment): Observable<any> {
+    const url = `${environment.RESTServiceBaseUrl}/comments/${comment.id}`;
+    return this.put(url, {
+      contenido: comment.contenido
     });
   }
 
@@ -171,5 +183,29 @@ export class TopicsServiceService {
     return this.get(url);
   }
 
+  createComment(comment: Comment): Observable<any>
+  {
+    const url = `${environment.RESTServiceBaseUrl}/comments`;
+    return this.post(url, {
+      contenido: comment.contenido,
+      tema: {
+        id: comment.tema.id
+      }
+    });
+  }
+
+  createReplyComment(comment: Comment): Observable<any>
+  {
+    const url = `${environment.RESTServiceBaseUrl}/comments`;
+    return this.post(url, {
+      contenido: comment.contenido,
+      tema: {
+        id: comment.tema.id
+      },
+      padre: {
+        id: comment.padre.id
+      }
+    });
+  }
 
 }
