@@ -7,7 +7,10 @@ import { ForumListComponent } from './forum/forum-list/forum-list.component';
 import { TopicListComponent } from './topic/topic-list/topic-list.component';
 import { TopicViewComponent } from './topic/topic-view/topic-view.component';
 import { TopicEditComponent } from './topic/topic-edit/topic-edit.component';
-import { LoginComponent } from './forum/login/login.component';
+import { LoginComponent } from './login/login.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { UserGlobalService } from './services/user-global.service';
 
 @NgModule({
   declarations: [
@@ -20,9 +23,11 @@ import { LoginComponent } from './forum/login/login.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UserGlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

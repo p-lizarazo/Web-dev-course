@@ -1,0 +1,48 @@
+<div>
+  <h2 class="h1 text-white text-center bg-primary p-4">Log In</h2>
+</div>
+<div *ngIf="!userService.user" class="container">
+  <div class="row">
+    <div class="col-6 align-self-center" id="loginbox">
+    <form (ngSubmit)="doLogin()">
+      <div class="row">
+        <div class="col-12">
+          <img class="imagelogin" src="/assets/Images/letter.svg" width=35px>
+          <input class="txtArea" type="text" name="txtLetter" [(ngModel)]="user" >
+        </div>
+        <div class="col-12">
+          <img class="imagelogin" src="/assets/Images/lock.svg" width=35p x>
+          <input class="txtArea" type="password" name="txtPassword" [(ngModel)]="password" >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p class="bg-danger text-white p-2 my-2" *ngIf="message">{{message}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary mr-auto w-50 my-2" type="btn">Ingresar</button>
+        </div>
+      </div>
+    </form>
+      </div>
+    <div class="col-6">
+      <img class="imagePrincipal img-fluid" src="/assets/Images/undraw_Process_re_gws7.svg">
+    </div>
+  </div>
+</div>
+
+<div *ngIf="userService.user" class="container">
+  <form (ngSubmit)="doLogout()">
+    <div>
+      User: {{userService.user.name}}
+    </div>
+    <div>
+      Roles: <span *ngFor="let role of userService.user.roles">{{role}},</span>
+    </div>
+    <div class="col">
+      <button class="btn btn-primary mr-auto w-50 my-2" type="btn">Logout</button>
+    </div>
+  </form>
+</div>

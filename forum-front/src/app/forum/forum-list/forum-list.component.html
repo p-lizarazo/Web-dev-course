@@ -1,1 +1,30 @@
-<p>forum-list works!</p>
+<div>
+  <h2 class="h1 text-white text-center bg-primary p-4">Foros</h2>
+</div>
+
+<div>
+  <a class="btn btn-primary m-2" [routerLink]="['/forum/create']">Create</a>
+  <table class="table table-light">
+    <thead class="thead-light">
+      <tr>
+        <th>Id</th>
+        <th>Titulo</th>
+        <th>Descripcion</th>
+        <th>Moderado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let forum of forums">
+        <td>
+          <a [routerLink]="['/forum/view', forum.id]">{{
+            forum.id
+          }}</a>
+        </td>
+        <td>{{ forum.titulo }}</td>
+        <td>{{ forum.descripcion }}</td>
+        <td *ngIf="forum.moderado">Si</td>
+        <td *ngIf="!forum.moderado">No</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
