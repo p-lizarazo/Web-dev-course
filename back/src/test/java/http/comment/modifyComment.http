@@ -1,0 +1,8 @@
+PUT /comments/-4 HTTP/1.1
+Host: localhost:8080
+Cookie: JSESSIONID=727F7B4C3A69086CBED48FA28CDE7ED0; Path=/; HttpOnly
+Content-Type: application/json
+
+{
+    "contenido" : "Modifique el comentario"
+}

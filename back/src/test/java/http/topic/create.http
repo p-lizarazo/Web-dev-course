@@ -1,0 +1,12 @@
+POST /topics/ HTTP/1.1
+Host: localhost:8080
+Cookie: JSESSIONID=D84CA48902743C1ED7BBA519F990C255; Path=/; HttpOnly;
+Content-Type: application/json
+
+{
+    "contenido" : "en este tema les explicare a jugar",
+    "foro" : {
+        "id" : -2 
+    },
+    "titulo" : "Un Tema nuevo"
+}

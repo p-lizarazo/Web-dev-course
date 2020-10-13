@@ -1,0 +1,2 @@
+GET /comments/votes/ HTTP/1.1
+Host: localhost:8080
